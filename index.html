@@ -3,48 +3,121 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-
-  </head>
-  <body>
-    <canvas id="gamecanvas"></canvas>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+    <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
+    <script src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
     <script>
-    var can = document.getElementById('gamecanvas');
-    can.height = 600; can.width = 800;
-    var ctx = can.getContext('2d');
-    var x = 400, y = 80, h = 20, a = 200;
-    ctx.fillStyle = "black";
-    ctx.fillRect(700, 100, 100, 100);
+      let stage;
+      let a;
+      let b;
+      let container;
+      let animation;
+      let data = {
+        images: ["./images/char.png"],
+        frames: {width: 64, height:64},
+        animations: {
+          run:[0, 2, 'run']
+        }
+      }
+      let position = {
+        "posCenter": 320,
+        "posRight": 430,
+        "posLeft": 230
+      }
 
-    function draw() {
-      var img = new Image(100, 100); //Creates an HTMLImageElement
-      img.src = "lib/cloud.png";
-      img.addEventListener("load", function() {
-          ctx.drawImage(img, x, y);
-      });
-        ctx.beginPath();
-        ctx.arc(x, y, h , 0, 2 * Math.PI);
-        ctx.fillStyle = 'rgba(250,0,0,0.4)';
-        ctx.fill();
-        ctx.arc(x+50, y, 20, 0, 2 * Math.PI);
-        ctx.fillStyle = 'rgba(250,0,250,0.4)';
-        ctx.fill();
-          x -= 0.8;
-          y += 0.1;
-          h += 0.2;
-        ctx.fillStyle = "rgba(34,45,23,0.4)";
-        ctx.fillRect(0, 0, can.width, can.height);
-        requestAnimationFrame(draw);
-        // ctx.clearRect(0,0,can.width,can.height);
-    }
+      let bitmap;
+      let coinArr = [];
+      let coinIdx = 0;
+      let randomPos = [[320, 180], [340, 310], [360, 480]]
 
-      var img = new Image(); //Creates an HTMLImageElement
-      img.src = "lib/favicon-cloud.png";
-      img.addEventListener("load", function() {
-          ctx.drawImage(img, 0, 0);
-      });
+      function init() {
+        stage = new createjs.Stage("gamecanvas");
+        stage.addChild(container);
 
-    draw();
+        let spriteSheet = new createjs.SpriteSheet(data);
+        animation = new createjs.Sprite(spriteSheet,"run");
+        animation.y = 450;
+        animation.x = position["posCenter"];
+        stage.addChild(animation)
+        createjs.Ticker.setFPS(10);
+        createjs.Ticker.addEventListener("tick", stage);
+        createjs.Ticker.on("tick", tick);
 
-</script>
+        let road = new createjs.Bitmap("./images/road.png");
+        road.x = 100;
+        road.y = 103;
+        stage.addChild(road);
+        play()
+      }
+
+      function play() {
+        bitmap = new createjs.Bitmap("./images/cloud.png");
+        let randomIdx = Math.floor(Math.random() * 3)
+        bitmap.x = randomPos[randomIdx][0];
+        bitmap.y = 110;
+        coinArr.push(bitmap);
+        createjs.Ticker.setFPS(10);
+        createjs.Ticker.addEventListener("tick", stage);
+        stage.addChild(bitmap)
+        createjs.Tween.get(coinArr[coinIdx]).to({x:180, y:700, scaleX:5, scaleY:5}, 4000, createjs.Ease.quadInOut);
+        let local = coinIdx;
+        setTimeout((local) => {
+          if ( animation.x === 220){
+            debugger;
+            console.log("YAY") }}, 2800)
+
+        let randomTime = Math.floor(Math.random()*1500)
+        coinIdx+=1;
+        // setTimeout(play, randomTime);
+      }
+
+      function getRandom() {
+        return Math.random() * 600 - 300;
+      }
+
+      let Key = {
+        _pressed: {},
+
+        LEFT: 37,
+        UP: 38,
+        RIGHT: 39,
+        DOWN: 40,
+
+        isDown: function(keyCode) {
+          return this._pressed[keyCode];
+        },
+
+        onKeydown: function(event) {
+          if (event.keyCode === 39) {
+            createjs.Tween.get(animation).to({x: animation.x + 100}, 600,createjs.Ease.quadInOut)
+          } else if (event.keyCode === 37) {
+            createjs.Tween.get(animation).to({x: animation.x - 100}, 600,createjs.Ease.quadInOut)
+          }
+        }
+      };
+
+      window.addEventListener('keydown',  function(event) { Key.onKeydown(event); })
+
+      function tick() {
+        // debugger
+        let coinDup = coinArr;
+        let coin = coinArr.length
+        for (var i = 0; i < coin; i++) {
+          if (coinDup[i].y === 700){
+            stage.removeChild(coinDup[i])
+            // coinArr.delete(i)
+          }
+          // debugger
+        }
+          // debugger
+
+      }
+      // animation.addEventListener()
+
+    </script>
+  </head>
+  <body onload="init();">
+    <canvas id="gamecanvas" width="700" height="600"></canvas>
   </body>
 </html>
