@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+  </head>
+  <body>
+    <canvas id="gamecanvas"></canvas>
+    <script>
+    var can = document.getElementById('gamecanvas');
+    can.height = 600; can.width = 800;
+    var ctx = can.getContext('2d');
+    var x = 400, y = 80, h = 20, a = 200;
+    ctx.fillStyle = "black";
+    ctx.fillRect(700, 100, 100, 100);
+
+    function draw() {
+      var img = new Image(100, 100); //Creates an HTMLImageElement
+      img.src = "lib/cloud.png";
+      img.addEventListener("load", function() {
+          ctx.drawImage(img, x, y);
+      });
+        ctx.beginPath();
+        ctx.arc(x, y, h , 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(250,0,0,0.4)';
+        ctx.fill();
+        ctx.arc(x+50, y, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(250,0,250,0.4)';
+        ctx.fill();
+          x -= 0.8;
+          y += 0.1;
+          h += 0.2;
+        ctx.fillStyle = "rgba(34,45,23,0.4)";
+        ctx.fillRect(0, 0, can.width, can.height);
+        requestAnimationFrame(draw);
+        // ctx.clearRect(0,0,can.width,can.height);
+    }
+
+      var img = new Image(); //Creates an HTMLImageElement
+      img.src = "lib/favicon-cloud.png";
+      img.addEventListener("load", function() {
+          ctx.drawImage(img, 0, 0);
+      });
+
+    draw();
+
+</script>
+  </body>
+</html>
