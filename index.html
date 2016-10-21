@@ -20,16 +20,44 @@
           run:[0, 2, 'run']
         }
       }
+
       let position = {
-        "posCenter": 320,
-        "posRight": 430,
-        "posLeft": 230
+        center: 320,
+        right: 430,
+        left: 230
       }
+
+      let i = 0;
 
       let bitmap;
       let coinArr = [];
-      let coinIdx = 0;
-      let randomPos = [[320, 180], [340, 310], [360, 480]]
+      let coinCount = 0;
+      let randomPos = [[320, 160], [340, 310], [360, 480]]
+      let Key = {
+        _pressed: {
+          LEFT: 37,
+          UP: 38,
+          RIGHT: 39,
+          DOWN: 40 },
+
+        onKeydown: function(event) {
+          if (event.keyCode === this._pressed.RIGHT) {
+            if (animation.x === position.left) {
+              createjs.Tween.get(animation).to({x: position.center}, 400,createjs.Ease.quadInOut)
+            } else if (animation.x === position.center) {
+              createjs.Tween.get(animation).to({x: position.right}, 400,createjs.Ease.quadInOut)
+            }
+          } else if (event.keyCode === this._pressed.LEFT) {
+            if (animation.x === position.right) {
+              createjs.Tween.get(animation).to({x: position.center}, 400,createjs.Ease.quadInOut)
+            } else if (animation.x === position.center) {
+              createjs.Tween.get(animation).to({x: position.left}, 400,createjs.Ease.quadInOut)
+            }
+          }
+        }
+      };
+
+      window.addEventListener('keydown',  function(event) { Key.onKeydown(event); })
 
       function init() {
         stage = new createjs.Stage("gamecanvas");
@@ -38,9 +66,9 @@
         let spriteSheet = new createjs.SpriteSheet(data);
         animation = new createjs.Sprite(spriteSheet,"run");
         animation.y = 450;
-        animation.x = position["posCenter"];
+        animation.x = position.center;
         stage.addChild(animation)
-        createjs.Ticker.setFPS(10);
+        createjs.Ticker.setFPS(40);
         createjs.Ticker.addEventListener("tick", stage);
         createjs.Ticker.on("tick", tick);
 
@@ -52,65 +80,48 @@
       }
 
       function play() {
-        bitmap = new createjs.Bitmap("./images/cloud.png");
+        bitmap = new createjs.Bitmap("./images/coin.png");
+        bitmap.height = 40;
+        bitmap.width = 40;
         let randomIdx = Math.floor(Math.random() * 3)
         bitmap.x = randomPos[randomIdx][0];
         bitmap.y = 110;
         coinArr.push(bitmap);
-        createjs.Ticker.setFPS(10);
+        createjs.Ticker.setFPS(40);
         createjs.Ticker.addEventListener("tick", stage);
         stage.addChild(bitmap)
-        createjs.Tween.get(coinArr[coinIdx]).to({x:180, y:700, scaleX:5, scaleY:5}, 4000, createjs.Ease.quadInOut);
-        let local = coinIdx;
-        setTimeout((local) => {
-          if ( animation.x === 220){
-            debugger;
-            console.log("YAY") }}, 2800)
+        createjs.Tween.get(coinArr[i]).to({x:randomPos[randomIdx][1], y:700, scaleX:5, scaleY:5}, 3000, createjs.Ease.quadIn);
 
-        let randomTime = Math.floor(Math.random()*1500)
-        coinIdx+=1;
-        // setTimeout(play, randomTime);
+        let randomTime = Math.floor(Math.random()* 1500 + 200)
+        i+=1;
+        setTimeout(play, randomTime);
       }
 
       function getRandom() {
         return Math.random() * 600 - 300;
       }
 
-      let Key = {
-        _pressed: {},
-
-        LEFT: 37,
-        UP: 38,
-        RIGHT: 39,
-        DOWN: 40,
-
-        isDown: function(keyCode) {
-          return this._pressed[keyCode];
-        },
-
-        onKeydown: function(event) {
-          if (event.keyCode === 39) {
-            createjs.Tween.get(animation).to({x: animation.x + 100}, 600,createjs.Ease.quadInOut)
-          } else if (event.keyCode === 37) {
-            createjs.Tween.get(animation).to({x: animation.x - 100}, 600,createjs.Ease.quadInOut)
-          }
-        }
-      };
-
-      window.addEventListener('keydown',  function(event) { Key.onKeydown(event); })
 
       function tick() {
-        // debugger
+
         let coinDup = coinArr;
-        let coin = coinArr.length
-        for (var i = 0; i < coin; i++) {
-          if (coinDup[i].y === 700){
-            stage.removeChild(coinDup[i])
-            // coinArr.delete(i)
+
+        for (let j = 0; j < coinDup.length; j++) {
+          if (coinDup[j].y === 700){
+            stage.removeChild(coinArr[j])
+            coinArr.splice(j, 1)
+            i -= 1;
+          } else if ( coinDup[j].y > 400 && coinDup[j].y < 490) {
+              if ( coinDup[j].x > 200 && coinDup[j].x < 250 && animation.x === position.left) {
+                stage.removeChild(coinArr[j])
+                coinArr.splice(j, 1)
+                i -= 1;
+                coinCount += 1;
+                console.log("Hit")
+              }
           }
-          // debugger
+
         }
-          // debugger
 
       }
       // animation.addEventListener()
