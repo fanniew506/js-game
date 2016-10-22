@@ -6,30 +6,46 @@
     <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
     <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
     <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
-    <script src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
     <script>
       let stage;
-      let a;
-      let b;
-      let container;
       let animation;
       let data = {
         images: ["./images/char.png"],
-        frames: {width: 64, height:64},
+        frames: {width: 90, height: 113},
         animations: {
-          run:[0, 2, 'run']
+          run:[0, 11, 'run']
+        }
+      }
+      let bombData = {
+        images: ["./images/bomb.png"],
+        frames: {width: 32, height:32},
+        animations: {
+          run:[0, 4, 'fizzle']
         }
       }
 
+      let bluCoinData = {
+        images: ["./images/blue_coin.png"],
+        frames: {width: 21, height: 26},
+        animations: {
+          run:[0, 11, 'sparkle']
+        }
+      }
+
+      let ratio = ["b", "b", "b", "c", "c", "c", "c", "bc"]
+      let numCoins;
       let position = {
         center: 320,
         right: 430,
-        left: 230
+        left: 210
       }
 
-      let i = 0;
+      let coinIdx = 0;
+      let bombIdx = 0;
 
       let bitmap;
+      let bomb;
+      let bombArr = [];
       let coinArr = [];
       let coinCount = 0;
       let randomPos = [[320, 160], [340, 310], [360, 480]]
@@ -43,15 +59,15 @@
         onKeydown: function(event) {
           if (event.keyCode === this._pressed.RIGHT) {
             if (animation.x === position.left) {
-              createjs.Tween.get(animation).to({x: position.center}, 400,createjs.Ease.quadInOut)
+              createjs.Tween.get(animation).to({x: position.center}, 150,createjs.Ease.quadInOut)
             } else if (animation.x === position.center) {
-              createjs.Tween.get(animation).to({x: position.right}, 400,createjs.Ease.quadInOut)
+              createjs.Tween.get(animation).to({x: position.right}, 150,createjs.Ease.quadInOut)
             }
           } else if (event.keyCode === this._pressed.LEFT) {
             if (animation.x === position.right) {
-              createjs.Tween.get(animation).to({x: position.center}, 400,createjs.Ease.quadInOut)
+              createjs.Tween.get(animation).to({x: position.center}, 150,createjs.Ease.quadInOut)
             } else if (animation.x === position.center) {
-              createjs.Tween.get(animation).to({x: position.left}, 400,createjs.Ease.quadInOut)
+              createjs.Tween.get(animation).to({x: position.left}, 150,createjs.Ease.quadInOut)
             }
           }
         }
@@ -61,70 +77,145 @@
 
       function init() {
         stage = new createjs.Stage("gamecanvas");
-        stage.addChild(container);
-
-        let spriteSheet = new createjs.SpriteSheet(data);
-        animation = new createjs.Sprite(spriteSheet,"run");
-        animation.y = 450;
-        animation.x = position.center;
-        stage.addChild(animation)
-        createjs.Ticker.setFPS(40);
+        createjs.Ticker.setFPS(30);
         createjs.Ticker.addEventListener("tick", stage);
         createjs.Ticker.on("tick", tick);
 
+        displayRoad();
+        displayCoinCount();
+        addRunningChar();
+        play();
+      }
+
+      function addRunningChar () {
+        let spriteSheet = new createjs.SpriteSheet(data);
+        animation = new createjs.Sprite(spriteSheet,"run");
+        animation.y = 410;
+        animation.x = position.center;
+        stage.addChild(animation)
+      }
+
+      function displayRoad() {
         let road = new createjs.Bitmap("./images/road.png");
         road.x = 100;
         road.y = 103;
         stage.addChild(road);
-        play()
       }
 
       function play() {
+        let randomIdx = Math.floor(Math.random()* 8)
+        if (ratio[randomIdx] === "b") {
+          giveBomb()
+        } else if (ratio[randomIdx] === "c"){
+          giveCoin()
+        } else if (ratio[randomIdx] === "bc"){
+          giveBlueCoin()
+        };
+        let randomTime = Math.floor(Math.random()* 1000 + 200)
+        setTimeout(play, randomTime);
+      }
+
+      function giveBomb() {
+        let randomIdx = Math.floor(Math.random() * 3)
+        let bombSheet = new createjs.SpriteSheet(bombData);
+        bomb = new createjs.Sprite(bombSheet,"fizzle");
+        bomb.x = randomPos[randomIdx][0];
+        bomb.y = 100;
+        bombArr.push(bomb);
+        stage.addChild(bomb)
+        createjs.Tween.get(bomb).to({x: randomPos[randomIdx][1], y: 600, scaleX: 3.5, scaleY: 3.5}, 2000, createjs.Ease.quadIn);
+        bombIdx += 1;
+      }
+
+      function giveCoin() {
         bitmap = new createjs.Bitmap("./images/coin.png");
         bitmap.height = 40;
         bitmap.width = 40;
         let randomIdx = Math.floor(Math.random() * 3)
         bitmap.x = randomPos[randomIdx][0];
-        bitmap.y = 110;
+        bitmap.y = 100;
         coinArr.push(bitmap);
-        createjs.Ticker.setFPS(40);
-        createjs.Ticker.addEventListener("tick", stage);
         stage.addChild(bitmap)
-        createjs.Tween.get(coinArr[i]).to({x:randomPos[randomIdx][1], y:700, scaleX:5, scaleY:5}, 3000, createjs.Ease.quadIn);
-
-        let randomTime = Math.floor(Math.random()* 1500 + 200)
-        i+=1;
-        setTimeout(play, randomTime);
+        createjs.Tween.get(coinArr[coinIdx]).to({x: randomPos[randomIdx][1], y: 600, scaleX: 3.5, scaleY: 3.5}, 2000, createjs.Ease.quadIn);
+        coinIdx += 1;
       }
 
-      function getRandom() {
-        return Math.random() * 600 - 300;
+      function giveBlueCoin() {
+        let randomIdx = Math.floor(Math.random() * 3)
+        let blueCoinSheet = new createjs.SpriteSheet(bluCoinData);
+        coin = new createjs.Sprite(blueCoinSheet,"sparkle");
+        coin.x = randomPos[randomIdx][0];
+        coin.y = 100;
+        coinArr.push(coin);
+        stage.addChild(coin)
+        createjs.Tween.get(coin).to({x: randomPos[randomIdx][1], y: 600, scaleX: 3.5, scaleY: 3.5}, 2000, createjs.Ease.quadIn);
+        coinIdx += 1;
       }
 
+      function collectCoin (coin, idx) {
+        stage.removeChild(coin)
+        coinArr.splice(idx, 1)
+        coinIdx -= 1;
+        coinCount += 1;
+      }
 
       function tick() {
-
+        numCoins.text = `${coinCount}`
         let coinDup = coinArr;
-
         for (let j = 0; j < coinDup.length; j++) {
           if (coinDup[j].y === 700){
             stage.removeChild(coinArr[j])
             coinArr.splice(j, 1)
-            i -= 1;
-          } else if ( coinDup[j].y > 400 && coinDup[j].y < 490) {
-              if ( coinDup[j].x > 200 && coinDup[j].x < 250 && animation.x === position.left) {
-                stage.removeChild(coinArr[j])
-                coinArr.splice(j, 1)
-                i -= 1;
-                coinCount += 1;
-                console.log("Hit")
+            coinIdx -= 1;
+          } else if ( coinDup[j].y > 400 && coinDup[j].y < 460) {
+              if ( coinDup[j].x > 200 && coinDup[j].x < 250 && animation.x === position.left ) {
+                collectCoin(coinArr[j], j)
+              } else if ( coinDup[j].x > 300 && coinDup[j].x < 340 && animation.x === position.center ) {
+                collectCoin(coinArr[j], j)
+              } else if ( coinDup[j].x > 400 && coinDup[j].x < 450 && animation.x === position.right ) {
+                collectCoin(coinArr[j], j)
               }
           }
-
         }
 
+        let bombDup = bombArr;
+        for (let j = 0; j < bombDup.length; j++) {
+          if (bombDup[j].y === 700){
+            stage.removeChild(bombArr[j])
+            bombArr.splice(j, 1)
+            bombIdx -= 1;
+          } else if ( bombDup[j].y > 400 && bombDup[j].y < 460) {
+              if ( bombDup[j].x > 200 && bombDup[j].x < 250 && animation.x === position.left ) {
+                gameOver();
+              } else if ( bombDup[j].x > 300 && bombDup[j].x < 340 && animation.x === position.center ) {
+                gameOver();
+              } else if ( bombDup[j].x > 400 && bombDup[j].x < 450 && animation.x === position.right ) {
+                gameOver();
+              }
+          }
+        }
       }
-      // animation.addEventListener()
+
+      function gameOver() {
+        createjs.Ticker.paused = true;
+        let modal = new createjs.Rectangle(0, 0, 700, 600);
+      }
+
+      function resetGame() {
+        coinArr = [];
+        bombArr = [];
+        coinCount = 0;
+        coinIdx = 0;
+        bombIdx = 0;
+      }
+
+      function displayCoinCount(){
+        numCoins = new createjs.Text(`${coinCount}`, "25px Arial", "#f50");
+        numCoins.x = 620;
+        numCoins.y = 50;
+        numCoins.textBaseline = "alphabetic";
+        stage.addChild(numCoins);
+      }
 
     </script>
   </head>
