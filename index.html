@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="./css/master.css" media="screen" title="no title">
     <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
     <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
     <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
@@ -82,21 +83,27 @@
         }
       }
     };
+    gameOverModal = new createjs.Shape();
+    gameOverModal.graphics.beginFill('#ccc').drawRect(0, 0, 700, 600);
+    gameOverModal.alpha = 0;
+    gameOverText = new createjs.Text("Game Over\nPress Enter to Play Again", "25px Arial", "#eee");
+    gameOverText.x = 130;
+    gameOverText.y = 200;
+    gameOverText.alpha = 0;
 
     window.addEventListener('keydown',  function(event) { Key.onKeydown(event); })
 
     function init() {
       stage = new createjs.Stage("gamecanvas");
-
-      createjs.Ticker.setFPS(30);
-      createjs.Ticker.addEventListener("tick", stage);
-      createjs.Ticker.on("tick", tick);
       playing = true;
       displayRoad();
       displayCoinCount();
       addRunningChar();
       play();
       addTree();
+      createjs.Ticker.setFPS(30);
+      createjs.Ticker.addEventListener("tick", stage);
+      createjs.Ticker.on("tick", tick);
     }
     function addTree() {
       if (playing === true) {
@@ -215,7 +222,7 @@
           coinArr.splice(j, 1)
           coinIdx -= 1;
         } else if ( coinDup[j].y > 380 && coinDup[j].y < 460) {
-            if ( coinDup[j].x > position.left - 30 && coinDup[j].x < position.left + 30 && animation.x === position.left ) {
+            if ( coinDup[j].x > position.left - 50 && coinDup[j].x < position.left + 30 && animation.x === position.left ) {
               collectCoin(coinArr[j], j)
             } else if ( coinDup[j].x > position.center - 30 && coinDup[j].x < position.center + 30 && animation.x === position.center ) {
               collectCoin(coinArr[j], j)
@@ -231,8 +238,8 @@
           stage.removeChild(bombArr[j])
           bombArr.splice(j, 1)
           bombIdx -= 1;
-        } else if ( bombDup[j].y > 410 && bombDup[j].y < 460) {
-            if ( bombDup[j].x > 200 && bombDup[j].x < 250 && animation.x === position.left ) {
+        } else if ( bombDup[j].y > 400 && bombDup[j].y < 460) {
+            if ( bombDup[j].x > position.left - 50 && bombDup[j].x < position.left + 30 && animation.x === position.left ) {
               gameOver();
             } else if ( bombDup[j].x > position.center - 30 && bombDup[j].x < position.center + 30 && animation.x === position.center ) {
               gameOver();
@@ -244,20 +251,17 @@
     }
 
     function gameOver() {
+      stage.addChild(gameOverModal, gameOverText)
       createjs.Ticker.paused = true;
       playing = false;
-      gameOverModal = new createjs.Shape();
-      gameOverModal.graphics.beginFill('#ccc').drawRect(0, 0, 700, 600);
-      gameOverModal.alpha = 0.01;
-      gameOverText = new createjs.Text("Game Over\nPress Enter to Play Again", "25px Arial", "#eee");
-      gameOverText.x = 130;
-      gameOverText.y = 200;
-      stage.addChild(gameOverModal, gameOverText);
+      gameOverText.alpha = 1;
+      gameOverModal.alpha = 0.75;
     }
 
     function resetGame() {
-      stage.removeChild(gameOverModal, gameOverText)
       createjs.Ticker.paused = false;
+      stage.removeAllChildren();
+      stage.update();
       coinArr = [];
       bombArr = [];
       coinCount = 0;
@@ -269,7 +273,7 @@
     function displayCoinCount(){
       coin = new createjs.Bitmap("./images/coin.png");
       coin.x = 600;
-      coin.y = 29;
+      coin.y = 30;
       numCoins = new createjs.Text(`${coinCount}`, "25px Arial", "#f50");
       numCoins.x = 630;
       numCoins.y = 50;
