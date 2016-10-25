@@ -20,7 +20,7 @@
   "homepage": "https://github.com/fanniew506/js-game#readme",
   "dependencies": {
     "babel": "^6.5.2",
-    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.0",
     "babel-core": "^6.18.0",
     "babel-loader": "^6.2.5",
     "easeljs-loader": "^0.1.2",
