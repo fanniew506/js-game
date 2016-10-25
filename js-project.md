@@ -8,8 +8,8 @@ The infinite runner game is one where the player continuously runs across the sc
 
 Users will be able to:
 
-- [ ] Start, pause, and reset the game board
-- [ ] Use the keyboard arrow keys and space bar to control the game
+- [ ] Start and restart the game
+- [ ] Use the keyboard arrow keys to control the game
 
 In addition, this project will include:
 
@@ -33,5 +33,5 @@ In addition, this project will include:
 
  **Day 4**: Install the controls for the user to interact with the game.  Style the frontend, making it polished and professional.  Goals for the day:
 
- - Create controls for game speed, stop, start, reset
+ - Create controls for game speed, start, reset
  - Have a styled `Canvas`, nice looking controls and title
