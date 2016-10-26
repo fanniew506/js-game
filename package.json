@@ -1,0 +1,21 @@
+{
+  "name": "park-runner-game",
+  "version": "1.0.0",
+  "description": "## About",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "./node_modules/.bin/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanniew506/js-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fanniew506/js-game/issues"
+  },
+  "homepage": "https://github.com/fanniew506/js-game#readme"
+}
