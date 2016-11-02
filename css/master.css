@@ -1,3 +1,46 @@
-.gamecanvas {
+body, main, canvas, h1, h2, h3, h4, h5, img, div, footer {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  text-align: center;
+  font-size: inherit;
+}
+
+
+canvas {
   margin: 0 auto;
+  display: block;
+  border: 0.5px solid #ccc;
+}
+
+body {
+  padding-top: 40px;
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+h1 {
+  font-size: 50px;
+  padding: 40px 0;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+.enter-key {
+  width: 70px;
+  padding: 0 20px;
+}
+
+.h-key {
+  width: 40px;
+  padding: 0 20px;
+}
+
+footer h2 {
+  font-size: 25px;
+}
+
+footer {
+  padding: 60px 0 60px 0;
 }

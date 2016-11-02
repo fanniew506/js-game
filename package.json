@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "./node_modules/.bin/"
+    "webpack": "./node_modules/.bin/webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,18 @@
   "bugs": {
     "url": "https://github.com/fanniew506/js-game/issues"
   },
-  "homepage": "https://github.com/fanniew506/js-game#readme"
+  "homepage": "https://github.com/fanniew506/js-game#readme",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "webpack": "^1.13.3"
+  },
+  "devDependencies": {}
 }
