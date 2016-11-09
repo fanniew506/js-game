@@ -44,3 +44,9 @@ footer h2 {
 footer {
   padding: 60px 0 60px 0;
 }
+
+.screen-shot {
+  border: 1px solid black;
+  width: 700px;
+  height: 600px;
+}
