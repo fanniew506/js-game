@@ -14,10 +14,10 @@ Up arrow key: Jump
 ## Playing the Game
 
 The game begins with a title screen that displays options for viewing the instructions or playing the game.
-<img class="screen-shot"src="images/about/start_menu.png"/>
+<img class="screen-shot"src="images/about/start_menu.png" width="400"/>
 
 Pressing the 'H' key will bring you to the How To Play menu.
-<img src="images/about/help_menu.png" style="border: 1px solid grey; width: 700px; height: 600px;"/>
+<img src="images/about/help_menu.png" width="700"/>
 
 
 ## More Information
