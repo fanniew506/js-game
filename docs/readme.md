@@ -1,4 +1,4 @@
- ## Infinite Runner Game
+ # Infinite Runner Game
 
  ### Background
 
@@ -13,18 +13,18 @@ Users will be able to:
 
 In addition, this project will include:
 
-- [ ] An About modal describing the background and rules of the game
+- [ ] An About screen describing the background and rules of the game
 - [ ] A production README   
 
  This project will be implemented with the following technologies:
 
- Vanilla JavaScript and jQuery for overall structure and game logic,
+ Vanilla JavaScript for overall structure and game logic,
  Easel.js with HTML5 Canvas for DOM manipulation and rendering,
  Webpack to bundle and serve up the various scripts.
 
  ### Implementation Timeline
 
- **Day 1**: Setup all necessary Node modules, including getting webpack up and running and `Easel.js` installed.  Create `webpack.config.js` as well as `package.json`. Learn the basics of `Easel.js`.  Goals for the day:
+ **Day 1**: Setup all necessary Node modules, including getting webpack up and running and `Easel.js` installed.  Create `webpack.config.js`. Learn the basics of `Easel.js`.
 
  **Day 2**: Dedicate this day to learning the `Easel.js` API.  Build out the background and the infinite scrolling as the game character runs across the screen.
 
