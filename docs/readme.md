@@ -1,4 +1,4 @@
-# Infinite Runner Game #
+# ParkRunner Game #
 
 ### Background
 
@@ -8,13 +8,13 @@ The infinite runner game is one where the player continuously runs across the sc
 
 Users will be able to:
 
-- [ x ] Start and restart the game
-- [ x ] Use the keyboard arrow keys to control the game
+- [x] Start and restart the game
+- [x] Use the keyboard arrow keys to control the game
 
 In addition, this project will include:
 
-- [ x ] An About screen describing the rules of the game
-- [ x ] A production README   
+- [x] An About screen describing the rules of the game
+- [x] A production README   
 
 This project will be implemented with the following technologies:
 
