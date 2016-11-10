@@ -1,9 +1,10 @@
-body, main, canvas, h1, h2, h3, h4, h5, img, div, footer {
+body, main, canvas, h1, h2, h3, h4, h5, img, div, footer, a  {
   margin: 0;
   padding: 0;
   font: inherit;
   text-align: center;
   font-size: inherit;
+  text-decoration: none;
 }
 
 
@@ -16,6 +17,7 @@ canvas {
 body {
   padding-top: 40px;
   font-family: 'Gloria Hallelujah', cursive;
+  background-color: #EFF9FF;
 }
 
 h1 {
@@ -25,6 +27,7 @@ h1 {
 
 h2 {
   font-size: 30px;
+  display: inline;
 }
 
 .enter-key {
@@ -48,4 +51,9 @@ footer {
 .screen-shot {
   width: 700px;
   height: 600px;
+}
+
+.logo {
+  width: 30px;
+  margin: 0 5px;
 }
