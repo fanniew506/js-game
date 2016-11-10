@@ -17,7 +17,7 @@ The game begins with a title screen that displays options for viewing the instru
 
 <img src="images/about/start_menu.png" style="border:1px solid black" width="400"/>
 
-Pressing the 'H' key will bring you to the How To Play menu.
+Pressing the 'H' key will bring display the How To Play menu.
 
 <img src="images/about/help_menu.png" style="border:1px solid black" width="400"/>
 
@@ -30,6 +30,11 @@ The player can control the character to collect as many coins as they can withou
 If they do collide with the obstacles, then a game over modal appears and allows the player to play again by pressing 'enter'.
 
 <img src="images/about/game_over.png" style="border:1px solid black" width="400"/>
+
+## To Do's
+
+- [ ] Generate different backgrounds for different levels.
+- [ ] Add coin collect sounds and background music.
 
 ## More Information
 

@@ -1,37 +1,44 @@
- # Infinite Runner Game
+# Infinite Runner Game #
 
- ### Background
+### Background
 
 The infinite runner game is one where the player continuously runs across the screen dodging obstacles for as long as they can.  They lose the game if they come into contact with the obstacle.
 
- ### Functionality & MVP
+### Functionality & MVP
 
 Users will be able to:
 
-- [ ] Start and restart the game
-- [ ] Use the keyboard arrow keys to control the game
+- [ x ] Start and restart the game
+- [ x ] Use the keyboard arrow keys to control the game
 
 In addition, this project will include:
 
-- [ ] An About screen describing the background and rules of the game
-- [ ] A production README   
+- [ x ] An About screen describing the rules of the game
+- [ x ] A production README   
 
- This project will be implemented with the following technologies:
+This project will be implemented with the following technologies:
 
- Vanilla JavaScript for overall structure and game logic,
- Easel.js with HTML5 Canvas for DOM manipulation and rendering,
- Webpack to bundle and serve up the various scripts.
+Vanilla JavaScript for overall structure and game logic, Create.js suite including Easel.js, Tween.js, and Sound.js  for animations and rendering, Webpack to bundle and serve up the various scripts.
 
- ### Implementation Timeline
+### Implementation Timeline
 
- **Day 1**: Setup all necessary Node modules, including getting webpack up and running and `Easel.js` installed.  Create `webpack.config.js`. Learn the basics of `Easel.js`.
+**Day 1**:
+- Create `webpack.config.js`.
+- Dedicate this day to learning the `Create.js` API and learn the basics of `Easel.js`.
+- Include static background image and draw road where game play will occur.
 
- **Day 2**: Dedicate this day to learning the `Easel.js` API.  Build out the background and the infinite scrolling as the game character runs across the screen.
+**Day 2**:   
+- Create running sprite animation character and basic object animations across the screen.  
+  * Draw and/or find coin, bomb and log sprites.
+- Create user controls to move across the road and jump.  
 
- **Day 3**: Create the game logic backend.  Build out modular functions for handling the different grid types along with their unique neighbor checks and rule sets.  
+**Day 3**:
+- Add title page, instruction page, and game over modals with key functions to navigate the pages.  
+- Create collision listeners between the player and the items.
+  * remove items from the canvas once they have moved off screen.
+- Display coin count on the corner of the screen that updates whenever player collects a coin.
 
 
- **Day 4**: Install the controls for the user to interact with the game.  Style the frontend, making it polished and professional.  Goals for the day:
-
- - Create controls for game speed, start, reset
- - Have a styled `Canvas`, nice looking controls and title
+**Day 4**:
+- Finish cleaning up animations and include a speed up of items the longer a player is in the game.  
+- Add background scrolling objects including trees and grass sprites for a more dynamic view.
