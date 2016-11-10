@@ -14,11 +14,22 @@ Up arrow key: Jump
 ## Playing the Game
 
 The game begins with a title screen that displays options for viewing the instructions or playing the game.
-<img src="images/about/start_menu.png" style="border: 1px solid black" width="400"/>
+
+<img src="images/about/start_menu.png" style="border:1px solid black" width="400"/>
 
 Pressing the 'H' key will bring you to the How To Play menu.
-<img src="images/about/help_menu.png" style="border: 1px solid black" width="400"/>
 
+<img src="images/about/help_menu.png" style="border:1px solid black" width="400"/>
+
+Pressing the 'enter' key on the title page or How To Play menu will begin the game
+
+<img src="images/about/game_play.png" style="border:1px solid black" width="400"/>
+
+The player can control the character to collect as many coins as they can without colliding with the bomb or log.  As the player collects more coins, the speed of items approaching the player speeds up as well.
+
+If they do collide with the obstacles, then a game over modal appears and allows the player to play again by pressing 'enter'.
+
+<img src="images/about/game_over.png" style="border:1px solid black" width="400"/>
 
 ## More Information
 
