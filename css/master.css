@@ -15,9 +15,10 @@ canvas {
 }
 
 body {
-  padding-top: 40px;
   font-family: 'Gloria Hallelujah', cursive;
-  background-color: #EFF9FF;
+  background-image: url("https://static.vecteezy.com/system/resources/previews/000/097/801/non_2x/keep-off-the-grass-background-free-vector.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 h1 {
@@ -28,6 +29,13 @@ h1 {
 h2 {
   font-size: 30px;
   display: inline;
+}
+
+.game-title {
+  font-size: 50px;
+  font-family: 'Bungee Shade', cursive;
+  padding: 0;
+  margin: 0;
 }
 
 .enter-key {
@@ -41,11 +49,11 @@ h2 {
 }
 
 footer h2 {
-  font-size: 25px;
+  font-size: 18px;
 }
 
 footer {
-  padding: 60px 0 60px 0;
+  padding: 20px 0;
 }
 
 .screen-shot {
